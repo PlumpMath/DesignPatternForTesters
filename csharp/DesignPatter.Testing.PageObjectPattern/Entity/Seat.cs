@@ -1,33 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Seat.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace DesignPatter.Testing.PageObjectPattern.Entity
 {
-    internal class Seat
+  #region Imports
+
+  using Newtonsoft.Json;
+
+  #endregion Imports
+
+  internal class Seat
+  {
+    #region Properties
+
+    [JsonProperty(PropertyName = "row")]
+    public int Row { get; set; }
+
+    [JsonProperty(PropertyName = "column")]
+    public int Column { get; set; }
+
+    [JsonProperty(PropertyName = "booked")]
+    public bool Booked { get; set; }
+
+    #endregion Properties
+
+    #region Methods
+
+    public override bool Equals(object obj)
     {
-        public int row { get; set; }
-        public int column { get; set; }
-        public bool aisle { get; set; }
-        public bool booked { get; set; }
-        public int preferencePoints { get; set; }
+      Seat other = obj as Seat;
 
-        public override bool Equals(object obj)
-        {
-            Seat other = obj as Seat;
-
-            return other != null &&
-                this.column == other.column &&
-                this.row == other.row;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.column.GetHashCode() ^
-                this.row.GetHashCode();
-        }
+      return other != null &&
+          this.Column == other.Column &&
+          this.Row == other.Row;
     }
 
+    public override int GetHashCode()
+    {
+      return this.Column.GetHashCode() ^
+          this.Row.GetHashCode();
+    }
+
+    #endregion Methods
+  }
 }

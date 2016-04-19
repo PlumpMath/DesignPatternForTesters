@@ -1,15 +1,28 @@
-﻿using NUnit.Framework;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MyFirstTest.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace DesignPatter.Testing.PageObjectPattern
 {
-    [TestFixture]
-    public class MyFirstTest
+  #region Imports
+
+  using NUnit.Framework;
+
+  #endregion Imports
+
+  [TestFixture]
+  public class MyFirstTest
+  {
+    private int result;
+
+    [Test]
+    public void Test()
     {
-        [Test]
-        public void Test()
-        {
-            int result = 5 + 3;
-            Assert.AreEqual(8, result);
-        }
+      this.result = 5 + 3;
+      Assert.AreEqual(8, this.result);
     }
+  }
 }

@@ -1,16 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ShowTime.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace DesignPatter.Testing.PageObjectPattern.Entity
 {
-    internal class ShowTime
-    {
-        public int id { get; set; }
-        public int movieId {get; set; }
-        public long timeInMilliseconds { get; set; }
-        public List<Seat[]> seats {get; set;}
-    }
+  #region Imports
+
+  using System.Collections.Generic;
+  using Newtonsoft.Json;
+
+  #endregion Imports
+
+  internal class ShowTime
+  {
+    #region Properties
+
+    [JsonProperty(PropertyName = "id")]
+    public int Id { get; set; }
+
+    [JsonProperty(PropertyName = "movieId")]
+    public int MovieId { get; set; }
+
+    [JsonProperty(PropertyName = "timeInMilliseconds")]
+    public long TimeInMilliseconds { get; set; }
+
+    [JsonProperty(PropertyName = "seats")]
+    public List<Seat[]> Seats { get; set; }
+
+    #endregion Properties
+  }
 }
