@@ -58,6 +58,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancePageObject\Pages\AssignSeatMap.cs" />
+    <Compile Include="AdvancePageObject\Pages\AssignSeatPage.cs" />
+    <Compile Include="AdvancePageObject\Pages\ConfirmationMap.cs" />
+    <Compile Include="AdvancePageObject\Pages\ConfirmationPage.cs" />
+    <Compile Include="AdvancePageObject\Pages\EliteMovieMap.cs" />
+    <Compile Include="AdvancePageObject\Pages\EliteMoviePage.cs" />
+    <Compile Include="AdvancePageObject\Pages\SelectionScheduleMap.cs" />
+    <Compile Include="AdvancePageObject\Pages\SelectionSchedulePage.cs" />
+    <Compile Include="AdvancePageObject\ReserveTest.cs" />
+    <Compile Include="AdvancePageObject\Template\BasePage.cs" />
+    <Compile Include="AdvancePageObject\Template\BasePageElementMap.cs" />
+    <Compile Include="AdvancePageObject\Validation\ApiConsumer.cs" />
+    <Compile Include="AdvancePageObject\Validation\GenericApiValidator.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MyFirstTest.cs" />
     <Compile Include="PageObject\Pages\AssignSeatPage.cs" />
