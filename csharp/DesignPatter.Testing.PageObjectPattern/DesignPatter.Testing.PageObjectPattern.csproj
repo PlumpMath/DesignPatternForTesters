@@ -76,6 +76,15 @@
     <Compile Include="ReserveTest.cs" />
     <Compile Include="Entity\Seat.cs" />
     <Compile Include="Entity\ShowTime.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\AssignSeatMap.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\AssignSeatPage.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\ConfirmationMap.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\ConfirmationPage.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\EliteMovieMap.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\EliteMoviePage.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\SelectionScheduleMap.cs" />
+    <Compile Include="ThreeLayerPageObject\Pages\SelectionSchedulePage.cs" />
+    <Compile Include="ThreeLayerPageObject\ReserveTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
