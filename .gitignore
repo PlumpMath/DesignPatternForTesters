@@ -2,9 +2,13 @@
 /csharp/DesignPatter.Testing.PageObjectPattern/packages
 /csharp/DesignPatter.Testing.PageObjectPattern/bin
 /csharp/DesignPatter.Testing.PageObjectPattern/obj
-/csharp/DesignPatter.Testing.PageObjectPattern/.vs/
+/csharp/DesignPatter.Testing.PageObjectPattern/.vs
 /csharp/DesignPatter.Testing.PageObjectPattern/DesignPatter.Testing.PageObjectPattern.csproj.user
 /csharp/Testing.FacadePattern/packages
 /csharp/Testing.FacadePattern/.vs/Testing.FacadePattern/v14
 /csharp/Testing.FacadePattern/Testing.FacadePattern/bin
 /csharp/Testing.FacadePattern/Testing.FacadePattern/obj
+/csharp/Dojo.DesignPattern.Testing/.vs
+/csharp/Dojo.DesignPattern.Testing/packages
+/csharp/Dojo.DesignPattern.Testing/Dojo.DesignPattern.Testing/bin
+/csharp/Dojo.DesignPattern.Testing/Dojo.DesignPattern.Testing/obj
