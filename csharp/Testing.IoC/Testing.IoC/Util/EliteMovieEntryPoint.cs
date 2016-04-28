@@ -8,11 +8,9 @@
 namespace Testing.Ioc.Util
 {
   using System;
-  using System.Threading;
+  using System.Collections.Generic;
   using Entity;
   using Interfaces;
-  using OpenQA.Selenium;
-  using Pages;
 
   public class EliteMovieEntryPoint
   {
@@ -20,7 +18,7 @@ namespace Testing.Ioc.Util
 
     public EliteMovieEntryPoint()
     {
-      this.eliteMovie = PageFactory.Get<IEliteMoviePage>();
+      this.eliteMovie = ContainerFactory.Get<IEliteMoviePage>();
     }
 
     public void Reserve(Reserve informationReserve)
@@ -35,6 +33,14 @@ namespace Testing.Ioc.Util
         .SelectShowtimeAndAmountSeats(informationReserve.Function, informationReserve.Seats.Count)
         .SelectSeats(informationReserve.Seats)
         .Finish();
+    }
+
+    internal ICollection<Seat> ObtainBookedSeats(string film, string showTime)
+    {
+      return this.eliteMovie
+        .SelectFilm(film)
+        .SelectShowtimeAndAmountSeats(showTime, 1)
+        .BookedSeats();
     }
   }
 }

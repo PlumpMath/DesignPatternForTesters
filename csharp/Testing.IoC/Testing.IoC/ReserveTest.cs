@@ -16,7 +16,7 @@ namespace Testing.Ioc
   using Entity;
   using NUnit.Framework;
   using Util;
-  using Validation;
+  using Validation.Interfaces;
 
   #endregion Imports
 
@@ -27,6 +27,8 @@ namespace Testing.Ioc
 
     private string url = "http://localhost:8080/";
 
+    private Collection<Seat> seats;
+    
     #endregion Attributes
 
     #region Tests
@@ -35,6 +37,8 @@ namespace Testing.Ioc
     public void Setup()
     {
       Driver.BrowserType = BrowserType.Firefox;
+      Uri uri = new Uri(this.url);
+      Driver.Instance.Browser.Navigate().GoToUrl(uri);
     }
 
     [TearDown]
@@ -46,26 +50,25 @@ namespace Testing.Ioc
     [Test]
     public void ReserveThreeSeatsIocPattern()
     {
-      Collection<Seat> seats = new Collection<Seat>
+      this.seats = new Collection<Seat>
       {
         new Seat() { Column = 12, Row = 4 },
         new Seat() { Column = 13, Row = 4 },
         new Seat() { Column = 14, Row = 4 }
       };
 
-      Reserve reserve = new Reserve(seats)
+      Reserve reserve = new Reserve(this.seats)
       {
         Film = "El Violinista del diablo",
         Function = "2020-03-02 20:00"
       };
 
-      Uri uri = new Uri(this.url);
-      Driver.Instance.Browser.Navigate().GoToUrl(uri);
-
       EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint();
       eliteMovie.Reserve(reserve);
 
-      GenericApiValidator.AssertBookedSeats(seats);
+      IEliteMovieValidator validator = ContainerFactory.Get<IEliteMovieValidator>();
+      validator.Reserve = reserve;
+      validator.VerifiesReserveSeats();
     }
 
     #endregion Tests

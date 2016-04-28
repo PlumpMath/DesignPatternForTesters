@@ -9,10 +9,10 @@ namespace Testing.Ioc.Pages
 {
   #region Imports
 
+  using System.Collections.ObjectModel;
   using static System.FormattableString;
   using OpenQA.Selenium;
   using Template;
-  using Util;
 
   #endregion Imports
 
@@ -22,6 +22,17 @@ namespace Testing.Ioc.Pages
 
     public IWebElement Continue =>
         this.Browser.FindElement(By.CssSelector("button.btn:nth-child(2)"));
+
+    public ReadOnlyCollection<IWebElement> BookedSeats
+    {
+      get
+      {
+        By seats = By.CssSelector("input[disabled=disabled][type=checkbox]");
+
+        this.Wait.Until(driver => driver.FindElement(seats));
+        return this.Browser.FindElements(By.CssSelector("input[disabled=disabled][type=checkbox]"));
+      }
+    }
 
     #endregion Properties
 

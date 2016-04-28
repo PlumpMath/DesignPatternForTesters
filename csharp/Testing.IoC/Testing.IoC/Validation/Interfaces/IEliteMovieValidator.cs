@@ -1,23 +1,22 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IAssignSeatPage.cs" company="ShareKnowledge">
+// <copyright file="IEliteMovieValidator.cs" company="ShareKnowledge">
 //     Copyright (c) ShareKnowledge. All rights reserved.
 // </copyright>
 // <author>Alejandro Perdomo</author>
 //-----------------------------------------------------------------------
 
-namespace Testing.Ioc.Util.Interfaces
+namespace Testing.Ioc.Validation.Interfaces
 {
   #region Imports
 
-  using System.Collections.Generic;
-  using Testing.Ioc.Entity;
+  using Entity;
 
   #endregion Imports
 
-  public interface IAssignSeatPage
+  public interface IEliteMovieValidator
   {
-    IConfirmationPage SelectSeats(ICollection<Seat> seats);
+    Reserve Reserve { get; set; }
 
-    ICollection<Seat> BookedSeats();
+    void VerifiesReserveSeats();
   }
 }

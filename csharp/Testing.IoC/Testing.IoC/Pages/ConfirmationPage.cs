@@ -29,7 +29,7 @@ namespace Testing.Ioc.Pages
     public IEliteMoviePage Finish()
     {
       this.Map.Finalize.Click();
-      return PageFactory.Get<IEliteMoviePage>();
+      return ContainerFactory.Get<IEliteMoviePage>();
     }
 
     #endregion Methods

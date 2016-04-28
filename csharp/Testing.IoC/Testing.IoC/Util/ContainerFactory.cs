@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="PageFactory.cs" company="ShareKnowledge">
+// <copyright file="ContainerFactory.cs" company="ShareKnowledge">
 //     Copyright (c) ShareKnowledge. All rights reserved.
 // </copyright>
 // <author>Alejandro Perdomo</author>
@@ -17,7 +17,7 @@ namespace Testing.Ioc.Util
 
   #endregion  Imports
 
-  public static class PageFactory
+  public static class ContainerFactory
   {
     private static IUnityContainer container = Load();
 

@@ -34,7 +34,7 @@ namespace Testing.Ioc.Pages
       this.Map.Seats.SelectByValue(seats.ToString(CultureInfo.CurrentCulture));
       this.Map.Continue.Click();
 
-      return PageFactory.Get<IAssignSeatPage>();
+      return ContainerFactory.Get<IAssignSeatPage>();
     }
 
     #endregion Methods

@@ -31,7 +31,7 @@ namespace Testing.Ioc.Pages
       this.Map.SearchFilm.SendKeys(film);
       this.Map.FirstFilm.Click();
 
-      return PageFactory.Get<ISelectionSchedulePage>();
+      return ContainerFactory.Get<ISelectionSchedulePage>();
     }
 
     #endregion Methods 

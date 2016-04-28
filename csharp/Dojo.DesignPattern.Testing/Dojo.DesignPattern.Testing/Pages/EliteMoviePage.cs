@@ -16,7 +16,7 @@ namespace Dojo.DesignPattern.Testing.Pages
 
     public SchedulePage SelectFilm(string filmName)
     {
-      this.Map.SearchFilm.SendKeys("El Violinista del Diablo");
+      this.Map.SearchFilm.SendKeys(filmName);
       this.Map.Film.Click();
 
       return new SchedulePage(this.Driver);

@@ -48,10 +48,6 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -107,9 +103,11 @@
     <Compile Include="Util\Interfaces\IConfirmationPage.cs" />
     <Compile Include="Util\Interfaces\IEliteMoviePage.cs" />
     <Compile Include="Util\Interfaces\ISelectionSchedulePage.cs" />
-    <Compile Include="Util\PageFactory.cs" />
+    <Compile Include="Util\ContainerFactory.cs" />
     <Compile Include="Validation\ApiConsumer.cs" />
-    <Compile Include="Validation\GenericApiValidator.cs" />
+    <Compile Include="Validation\EliteMovieApiValidator.cs" />
+    <Compile Include="Validation\EliteMovieUiValidator.cs" />
+    <Compile Include="Validation\Interfaces\IEliteMovieValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

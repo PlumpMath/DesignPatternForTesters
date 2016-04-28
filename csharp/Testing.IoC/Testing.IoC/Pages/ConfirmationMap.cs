@@ -19,10 +19,23 @@ namespace Testing.Ioc.Pages
   {
     #region Properties
 
+    public IWebElement Alert
+    {
+      get
+      {
+        By alert = By.CssSelector(".alert");
+        this.Wait.Until(driver => driver.FindElement(alert));
+
+        return this.Browser.FindElement(alert);
+      }
+    }
+
     public IWebElement Finalize
     {
       get
       {
+        this.Wait.Until(driver => this.Alert);
+
         By button = By.CssSelector(".btn");
         this.Wait.Until(driver => driver.FindElement(button));
         return this.Browser.FindElement(button);
