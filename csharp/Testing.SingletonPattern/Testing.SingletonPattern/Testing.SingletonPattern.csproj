@@ -79,8 +79,6 @@
     <Compile Include="Template\BasePageElementMap.cs" />
     <Compile Include="Util\BrowserType.cs" />
     <Compile Include="Util\Driver.cs" />
-    <Compile Include="Util\DriverBasic.cs" />
-    <Compile Include="Util\DriverMultithreaded.cs" />
     <Compile Include="Util\EliteMovieEntryPoint.cs" />
     <Compile Include="Validation\ApiConsumer.cs" />
     <Compile Include="Validation\GenericApiValidator.cs" />

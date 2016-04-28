@@ -23,7 +23,8 @@ namespace Testing.SingletonPattern.Util
   {
     #region Attributes
 
-    private static Driver instance;
+    private static readonly Lazy<Driver> Lazy =
+        new Lazy<Driver>(() => new Driver());
 
     #endregion Attributes
 
@@ -42,17 +43,7 @@ namespace Testing.SingletonPattern.Util
     public static BrowserType BrowserType { get; set; }
 
     public static Driver Instance
-    {
-      get
-      {
-        if (instance == null)
-        {
-          instance = new Driver();
-        }
-
-        return instance;
-      }
-    }
+      => Lazy.Value;
 
     public IWebDriver Browser { get; }
 
