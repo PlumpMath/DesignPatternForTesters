@@ -12,3 +12,7 @@
 /csharp/Dojo.DesignPattern.Testing/packages
 /csharp/Dojo.DesignPattern.Testing/Dojo.DesignPattern.Testing/bin
 /csharp/Dojo.DesignPattern.Testing/Dojo.DesignPattern.Testing/obj
+/csharp/Testing.SingletonPattern/Testing.SingletonPattern/obj
+/csharp/Testing.SingletonPattern/Testing.SingletonPattern/bin
+/csharp/Testing.SingletonPattern/packages
+/csharp/Testing.SingletonPattern/.vs
