@@ -8,7 +8,7 @@ using OpenQA.Selenium;
 
 namespace Dojo.DesignPattern.Testing.Pages
 {
-  class EliteMoviePage : PageBase<EliteMovieMap>
+  public class EliteMoviePage : PageBase<EliteMovieMap>
   {
     public EliteMoviePage(IWebDriver driver) : base(driver)
     {

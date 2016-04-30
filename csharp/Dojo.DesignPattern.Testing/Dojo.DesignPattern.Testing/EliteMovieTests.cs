@@ -8,9 +8,9 @@
   using System.Drawing;
   using System.Linq;
   using System.Net;
-  using System.Text;
   using System.Threading;
-  using System.Threading.Tasks;
+  using Entity;
+  using EntryPoint;
   using Newtonsoft.Json;
   using Newtonsoft.Json.Linq;
   using NUnit.Framework;
@@ -23,67 +23,35 @@
   public class EliteMovieTests
   {
     [Test]
-    public void ReserveThreeSeatsNonPattern()
+    public void ReserveThreeSeats()
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-        
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("El Violinista del Diablo");
+        Reserve reserve = new Reserve("El Violinista del Diablo", "2", 3);
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("2");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("3");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        IWebElement firstSeat = driver.FindElement(By.CssSelector("label[for='4,12']"));
-        firstSeat.Click();
-
-        IWebElement secondSeat = driver.FindElement(By.CssSelector("label[for='4,13']"));
-        secondSeat.Click();
-
-        IWebElement thirdSeat = driver.FindElement(By.CssSelector("label[for=\'4,14']"));
-        thirdSeat.Click();
-
-        IWebElement continueOption2 = driver.FindElement(By.CssSelector("button.btn:nth-child(2)"));
-        continueOption2.Click();
-
-        IWebElement finilize = driver.FindElement(By.CssSelector(".btn"));
-        finilize.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        eliteMovie.Reserve(reserve);
       }
-
-      List<JToken> bookedSeats = new List<JToken>();
+      
+      List<Seat> bookedSeats = new List<Seat>();
       using (WebClient request = new WebClient())
       {
         string response = request.DownloadString("http://localhost:8080/rest/showtime/2");
-        JObject showTime = JsonConvert.DeserializeObject<JObject> (response);
+        ShowTime showTime = JsonConvert.DeserializeObject<ShowTime>(response);
 
-        showTime.GetValue("seats").ToList().ForEach(block => bookedSeats.AddRange(block.Where(seat => seat.Value<JObject>().GetValue("booked").Value<bool>())));
+        showTime.Seats.ForEach(block => bookedSeats.AddRange(block.Where(seat => seat.Booked)));
       }
 
-      List<Point> result = bookedSeats.ToList().Select(token => new Point(
-        token.ToObject<JObject>().GetValue("row").ToObject<int>(),
-        token.ToObject<JObject>().GetValue("column").ToObject<int>())).ToList();
-
-      List<Point> expectedResult = new List<Point>()
+      List<Seat> expectedResult = new List<Seat>()
       {
-        new Point(4, 12),
-        new Point(4, 13),
-        new Point(4, 14)
+        new Seat(4, 12, true),
+        new Seat(4, 13, true),
+        new Seat(4, 14, true),
       };
 
-      CollectionAssert.AreEquivalent(expectedResult, result);
+      CollectionAssert.AreEquivalent(expectedResult, bookedSeats);
     }
 
     [Test]
