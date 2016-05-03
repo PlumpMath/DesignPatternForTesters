@@ -8,7 +8,7 @@ using OpenQA.Selenium;
 
 namespace Dojo.DesignPattern.Testing.Pages
 {
-  class EliteMoviePage : PageBase<EliteMovieMap>
+  public class EliteMoviePage : PageBase<EliteMovieMap>
   {
     public EliteMoviePage(IWebDriver driver) : base(driver)
     {
@@ -20,6 +20,12 @@ namespace Dojo.DesignPattern.Testing.Pages
       this.Map.Film.Click();
 
       return new SchedulePage(this.Driver);
+    }
+
+    internal bool FindFilm(string filmName)
+    {
+      this.Map.SearchFilm.SendKeys(filmName);
+      return this.Map.MovieListings.Any();
     }
   }
 }

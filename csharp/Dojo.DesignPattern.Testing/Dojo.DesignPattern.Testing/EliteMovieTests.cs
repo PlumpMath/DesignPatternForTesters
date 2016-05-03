@@ -8,9 +8,9 @@
   using System.Drawing;
   using System.Linq;
   using System.Net;
-  using System.Text;
   using System.Threading;
-  using System.Threading.Tasks;
+  using Entity;
+  using EntryPoint;
   using Newtonsoft.Json;
   using Newtonsoft.Json.Linq;
   using NUnit.Framework;
@@ -23,108 +23,52 @@
   public class EliteMovieTests
   {
     [Test]
-    public void ReserveThreeSeatsNonPattern()
+    public void ReserveThreeSeats()
     {
+      Reserve reserve = new Reserve("El Violinista del Diablo", "2");
+
       using (IWebDriver driver = new FirefoxDriver())
       {
-        
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("El Violinista del Diablo");
+        reserve.Seats.Add(new Seat(4, 12));
+        reserve.Seats.Add(new Seat(4, 13));
+        reserve.Seats.Add(new Seat(4, 14));
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("2");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("3");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        IWebElement firstSeat = driver.FindElement(By.CssSelector("label[for='4,12']"));
-        firstSeat.Click();
-
-        IWebElement secondSeat = driver.FindElement(By.CssSelector("label[for='4,13']"));
-        secondSeat.Click();
-
-        IWebElement thirdSeat = driver.FindElement(By.CssSelector("label[for=\'4,14']"));
-        thirdSeat.Click();
-
-        IWebElement continueOption2 = driver.FindElement(By.CssSelector("button.btn:nth-child(2)"));
-        continueOption2.Click();
-
-        IWebElement finilize = driver.FindElement(By.CssSelector(".btn"));
-        finilize.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        eliteMovie.Reserve(reserve);
       }
-
-      List<JToken> bookedSeats = new List<JToken>();
+      
+      List<Seat> bookedSeats = new List<Seat>();
       using (WebClient request = new WebClient())
       {
         string response = request.DownloadString("http://localhost:8080/rest/showtime/2");
-        JObject showTime = JsonConvert.DeserializeObject<JObject> (response);
+        ShowTime showTime = JsonConvert.DeserializeObject<ShowTime>(response);
 
-        showTime.GetValue("seats").ToList().ForEach(block => bookedSeats.AddRange(block.Where(seat => seat.Value<JObject>().GetValue("booked").Value<bool>())));
+        showTime.Seats.ForEach(block => bookedSeats.AddRange(block.Where(seat => seat.Booked)));
       }
 
-      List<Point> result = bookedSeats.ToList().Select(token => new Point(
-        token.ToObject<JObject>().GetValue("row").ToObject<int>(),
-        token.ToObject<JObject>().GetValue("column").ToObject<int>())).ToList();
-
-      List<Point> expectedResult = new List<Point>()
-      {
-        new Point(4, 12),
-        new Point(4, 13),
-        new Point(4, 14)
-      };
-
-      CollectionAssert.AreEquivalent(expectedResult, result);
+      CollectionAssert.AreEquivalent(reserve.Seats, bookedSeats);
     }
 
     [Test]
     public void SelectMoreSeatsThanAllowedErrorTest()
     {
+      Reserve reserve = new Reserve("El Violinista del Diablo", "2");
+
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("El Violinista del Diablo");
+        reserve.Seats.Add(new Seat(2, 12));
+        reserve.Seats.Add(new Seat(2, 13));
+        reserve.Seats.Add(new Seat(2, 14));
+        reserve.Seats.Add(new Seat(2, 15));
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        List<Seat> seats = eliteMovie.TryToSelectSeats(reserve, 3);
 
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("2");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("3");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        IWebElement firstSeat = driver.FindElement(By.CssSelector("label[for='1,12']"));
-        firstSeat.Click();
-
-        IWebElement secondSeat = driver.FindElement(By.CssSelector("label[for='1,13']"));
-        secondSeat.Click();
-
-        IWebElement thirdSeat = driver.FindElement(By.CssSelector("label[for=\'1,14']"));
-        thirdSeat.Click();
-
-        IWebElement fourthSeat = driver.FindElement(By.CssSelector("label[for=\'1,15']"));
-        fourthSeat.Click();
-        fourthSeat.Click();
-
-        bool isFourthSeatSelected = driver.FindElement(By.CssSelector(@"#\31 \,15")).Selected;
+        bool isFourthSeatSelected = seats[3].Booked;
         Assert.AreEqual(false, isFourthSeatSelected);
       }
     }
@@ -132,31 +76,20 @@
     [Test]
     public void FullShowTime()
     {
+
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("El libro de la vida");
+        Reserve reserve = new Reserve("El libro de la vida", "6");
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        string message = eliteMovie.TryToRereserve(reserve);
 
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("6");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("3");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        string text = driver.SwitchTo().Alert().Text;
-
-        Assert.AreEqual(text, "Solo hay 0 sillas disponibles.");
+        Assert.AreEqual(message, "Solo hay 0 sillas disponibles.");
       }
     }
 
@@ -165,29 +98,17 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Donde se esconde el diablo");
+        Reserve reserve = new Reserve("Donde se esconde el diablo", "9");
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        string message = eliteMovie.TryToRereserve(reserve);
 
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("9");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("3");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        string text = driver.SwitchTo().Alert().Text;
-
-        Assert.AreEqual(text, "Solo hay 2 sillas disponibles.");
+        Assert.AreEqual(message, "Solo hay 2 sillas disponibles.");
       }
     }
 
@@ -196,29 +117,20 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Primicia Mortal");
+        Reserve reserve = new Reserve("Primicia Mortal", "12");
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        string message = eliteMovie.TryToRereserve(reserve);
 
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("12");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("6");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        string text = driver.SwitchTo().Alert().Text;
-
-        Assert.AreEqual(text, "Solo hay 3 sillas disponibles.");
+        Assert.AreEqual(message, "Solo hay 3 sillas disponibles.");
       }
     }
 
@@ -227,29 +139,20 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Relatos Salvajes");
+        Reserve reserve = new Reserve("Relatos Salvajes", "15");
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
+        reserve.Seats.Add(new Seat());
 
-        IWebElement film = driver.FindElement(By.CssSelector("a.ng-scope:nth-child(1) > img:nth-child(1)"));
-        film.Click();
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        string message = eliteMovie.TryToRereserve(reserve);
 
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        SelectElement function = new SelectElement(driver.FindElement(By.Id("showTime")));
-        function.SelectByValue("15");
-
-        SelectElement seats = new SelectElement(driver.FindElement(By.Name("seats")));
-        seats.SelectByValue("6");
-
-        IWebElement continueOption = driver.FindElement(By.CssSelector("input.btn"));
-        continueOption.Click();
-
-        Thread.Sleep(TimeSpan.FromSeconds(3));
-        string text = driver.SwitchTo().Alert().Text;
-
-        Assert.AreEqual(text, "Solo hay 4 sillas disponibles.");
+        Assert.AreEqual(message, "Solo hay 4 sillas disponibles.");
       }
     }
 
@@ -258,15 +161,12 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Exodo, Dioses y Reyes");
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        bool found = eliteMovie.FindFilm("Exodo, Dioses y Reyes");
 
-        ReadOnlyCollection<IWebElement> film = driver.FindElements(By.CssSelector("a.ng-scope"));
-
-        Assert.IsTrue(film.Any());
+        Assert.IsTrue(found);
       }
     }
 
@@ -275,15 +175,12 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Pancho el perro millonario");
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        bool found = eliteMovie.FindFilm("Pancho el perro millonario");
 
-        ReadOnlyCollection<IWebElement> film = driver.FindElements(By.CssSelector("a.ng-scope"));
-
-        Assert.IsTrue(film.Any());
+        Assert.IsTrue(found);
       }
     }
 
@@ -292,15 +189,12 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Los Juegos del Hambre: Sinsajo Parte 1");
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        bool found = eliteMovie.FindFilm("Los Juegos del Hambre: Sinsajo Parte 1");
 
-        ReadOnlyCollection<IWebElement> film = driver.FindElements(By.CssSelector("a.ng-scope"));
-
-        Assert.IsTrue(film.Any());
+        Assert.IsTrue(found);
       }
     }
 
@@ -309,15 +203,12 @@
     {
       using (IWebDriver driver = new FirefoxDriver())
       {
-
         driver.Navigate().GoToUrl("http://localhost:8080/");
 
-        IWebElement searchFilm = driver.FindElement(By.CssSelector(".searchfield"));
-        searchFilm.SendKeys("Violinista Diablo");
+        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
+        bool found = eliteMovie.FindFilm("Violinista Diablo");
 
-        ReadOnlyCollection<IWebElement> film = driver.FindElements(By.CssSelector("a.ng-scope"));
-
-        Assert.IsTrue(film.Any());
+        Assert.IsTrue(found);
       }
     }
 
