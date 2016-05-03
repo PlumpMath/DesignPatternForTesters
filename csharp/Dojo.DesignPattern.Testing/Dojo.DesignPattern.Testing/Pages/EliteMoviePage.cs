@@ -21,5 +21,11 @@ namespace Dojo.DesignPattern.Testing.Pages
 
       return new SchedulePage(this.Driver);
     }
+
+    internal bool FindFilm(string filmName)
+    {
+      this.Map.SearchFilm.SendKeys(filmName);
+      return this.Map.MovieListings.Any();
+    }
   }
 }

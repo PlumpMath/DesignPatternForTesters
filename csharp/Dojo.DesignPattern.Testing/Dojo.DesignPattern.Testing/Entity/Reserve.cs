@@ -12,17 +12,17 @@ namespace Dojo.DesignPattern.Testing.Entity
     {
     }
 
-    public Reserve(string film, string showtime, int numberSeats)
+    public Reserve(string film, string showtime)
     {
       this.Film = film;
       this.Showtime = showtime;
-      this.NumberSeats = numberSeats;
+      this.Seats = new List<Seat>();
     }
 
     public string Film { get; set; }
 
     public string Showtime { get; set; }
 
-    public int NumberSeats { get; set; }
+    public List<Seat> Seats { get; }
   }
 }
