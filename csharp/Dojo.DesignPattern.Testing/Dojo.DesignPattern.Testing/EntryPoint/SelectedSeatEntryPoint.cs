@@ -14,9 +14,9 @@ namespace Dojo.DesignPattern.Testing.EntryPoint
   {
     private SelectSeatPage selectSeat;
 
-    public SelectedSeatEntryPoint(IWebDriver driver)
+    public SelectedSeatEntryPoint()
     {
-      this.selectSeat = new SelectSeatPage(driver);
+      this.selectSeat = new SelectSeatPage();
     }
 
     public bool IsFull()

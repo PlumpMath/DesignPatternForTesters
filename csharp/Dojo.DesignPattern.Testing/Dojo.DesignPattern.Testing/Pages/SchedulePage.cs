@@ -13,17 +13,13 @@ namespace Dojo.DesignPattern.Testing.Pages
 
   public class SchedulePage : PageBase<SchedulePageMap>
   {
-    public SchedulePage(IWebDriver driver) : base(driver)
-    {
-    }
-
     internal SelectSeatPage SelectShowTime(string showTime, int seats)
     {
       this.Map.ShowTime.SelectByValue(showTime);
       this.Map.Seats.SelectByValue(seats.ToString(CultureInfo.CurrentCulture));
       this.Map.Continue.Click();
 
-      return new SelectSeatPage(this.Driver);
+      return new SelectSeatPage();
     }
   }
 }

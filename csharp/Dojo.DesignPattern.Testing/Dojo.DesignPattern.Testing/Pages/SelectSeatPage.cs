@@ -17,16 +17,12 @@ namespace Dojo.DesignPattern.Testing.Pages
 
   public class SelectSeatPage : PageBase<SelectSeatMap>
   {
-    public SelectSeatPage(IWebDriver driver) : base(driver)
-    {
-    }
-
     public ConfirmationPage SelectSeatsAndContinue(ICollection<Seat> seats)
     {
       seats.ToList().ForEach(seat => this.Map.Seat(seat.Row, seat.Column).Click());
       this.Map.Continue.Click();
 
-      return new ConfirmationPage(this.Driver);
+      return new ConfirmationPage();
     }
 
     internal ICollection<Seat> SelectSeat(ICollection<Seat> seats)
@@ -60,6 +56,11 @@ namespace Dojo.DesignPattern.Testing.Pages
           SelectSeatPage.ConvertToSeat(element.GetAttribute("id"))));
 
       return bookedSeats;
+    }
+
+    internal string AlertMessage()
+    {
+      return this.Driver.SwitchTo().Alert().Text;
     }
 
     private static Seat ConvertToSeat(string position)
