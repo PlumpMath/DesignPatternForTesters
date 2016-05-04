@@ -18,7 +18,7 @@ namespace Testing.FacadePattern.Pages
   {
     #region Constructors
 
-    public ConfirmationPage(IWebDriver driver) : base(driver)
+    public ConfirmationPage() : base()
     {
     }
 
@@ -29,7 +29,7 @@ namespace Testing.FacadePattern.Pages
     public EliteMoviePage Finish()
     {
       this.Map.Finilize.Click();
-      return new EliteMoviePage(this.Driver);
+      return new EliteMoviePage();
     }
 
     #endregion Methods

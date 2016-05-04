@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Reserve.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Entity
 {
+  using System.Collections.Generic;
+
   public class Reserve
   {
     public Reserve()
@@ -23,6 +26,6 @@ namespace Dojo.DesignPattern.Testing.Entity
 
     public string Showtime { get; set; }
 
-    public List<Seat> Seats { get; }
+    public ICollection<Seat> Seats { get; }
   }
 }

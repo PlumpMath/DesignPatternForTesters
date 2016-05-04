@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dojo.DesignPattern.Testing.Template;
-using OpenQA.Selenium;
+﻿//-----------------------------------------------------------------------
+// <copyright file="EliteMoviePage.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Pages
 {
+  using System.Linq;
+  using OpenQA.Selenium;
+  using Template;
+
   public class EliteMoviePage : PageBase<EliteMovieMap>
   {
     public EliteMoviePage(IWebDriver driver) : base(driver)
@@ -16,7 +19,7 @@ namespace Dojo.DesignPattern.Testing.Pages
 
     public SchedulePage SelectFilm(string filmName)
     {
-      this.Map.SearchFilm.SendKeys("El Violinista del Diablo");
+      this.Map.SearchFilm.SendKeys(filmName);
       this.Map.Film.Click();
 
       return new SchedulePage(this.Driver);

@@ -1,9 +1,16 @@
-﻿using System.Collections.ObjectModel;
-using Dojo.DesignPattern.Testing.Template;
-using OpenQA.Selenium;
+﻿//-----------------------------------------------------------------------
+// <copyright file="EliteMovieMap.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Pages
 {
+  using System.Collections.ObjectModel;
+  using OpenQA.Selenium;
+  using Template;
+
   public class EliteMovieMap : BasePageElementMap
   {
     public IWebElement SearchFilm =>

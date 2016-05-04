@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dojo.DesignPattern.Testing</RootNamespace>
     <AssemblyName>Dojo.DesignPattern.Testing</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -60,8 +62,10 @@
     <Compile Include="EliteMovieTests.cs" />
     <Compile Include="Entity\Reserve.cs" />
     <Compile Include="Entity\Seat.cs" />
-    <Compile Include="Entity\ShowTime.cs" />
+    <Compile Include="Entity\Showtime.cs" />
     <Compile Include="EntryPoint\EliteMovieEntryPoint.cs" />
+    <Compile Include="EntryPoint\SelectedSeatEntryPoint.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Pages\ConfirmationMap.cs" />
     <Compile Include="Pages\ConfirmationPage.cs" />
     <Compile Include="Pages\EliteMovieMap.cs" />
@@ -70,7 +74,9 @@
     <Compile Include="Pages\SchedulePageMap.cs" />
     <Compile Include="Pages\SelectSeatMap.cs" />
     <Compile Include="Pages\SelectSeatPage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Template\BasePageElementMap.cs" />
     <Compile Include="Template\PageBase.cs" />
   </ItemGroup>

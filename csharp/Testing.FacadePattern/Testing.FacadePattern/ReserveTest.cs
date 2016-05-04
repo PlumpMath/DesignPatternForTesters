@@ -52,14 +52,11 @@ namespace Testing.FacadePattern
         Function = "2020-03-02 20:00"
       };
 
-      using (IWebDriver driver = new FirefoxDriver())
-      {
-        Uri uri = new Uri(this.url);
-        driver.Navigate().GoToUrl(uri);
+      Uri uri = new Uri(this.url);
+      DriverSingleton.Instance.Browser.Navigate().GoToUrl(uri);
 
-        EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint(driver);
-        eliteMovie.Reserve(reserve);
-      }
+      EliteMovieEntryPoint eliteMovie = new EliteMovieEntryPoint();
+      eliteMovie.Reserve(reserve);
 
       GenericApiValidator.AssertBookedSeats(seats);
     }
