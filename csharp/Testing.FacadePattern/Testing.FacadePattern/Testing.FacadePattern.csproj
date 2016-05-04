@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\DriverSingleton.cs" />
     <Compile Include="Util\EliteMovieEntryPoint.cs" />
     <Compile Include="Entity\Reserve.cs" />
     <Compile Include="Entity\Seat.cs" />

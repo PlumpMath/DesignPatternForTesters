@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dojo.DesignPattern.Testing.Template;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SchedulePageMap.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Pages
 {
+  using OpenQA.Selenium;
+  using OpenQA.Selenium.Support.UI;
+  using Template;
+
   public class SchedulePageMap : BasePageElementMap
   {
     public SelectElement ShowTime =>

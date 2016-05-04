@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿//-----------------------------------------------------------------------
+// <copyright file="PageBase.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Template
 {
+  using OpenQA.Selenium;
+
   public class PageBase<T> where T : BasePageElementMap, new()
   {
     #region Constructors

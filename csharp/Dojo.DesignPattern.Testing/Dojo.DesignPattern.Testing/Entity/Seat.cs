@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Seat.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Entity
 {
+  using Newtonsoft.Json;
+
   public class Seat
   {
     public Seat() : this(0, 0)

@@ -23,7 +23,7 @@ namespace Testing.FacadePattern.Pages
   {
     #region Constructors
 
-    public AssignSeatPage(IWebDriver driver) : base(driver)
+    public AssignSeatPage() : base()
     {
     }
 
@@ -36,7 +36,7 @@ namespace Testing.FacadePattern.Pages
       seats.ToList().ForEach(current => this.Map.Seat(current.Row, current.Column).Click());
       this.Map.Continue.Click();
 
-      return new ConfirmationPage(this.Driver);
+      return new ConfirmationPage();
     }
 
     #endregion Methods

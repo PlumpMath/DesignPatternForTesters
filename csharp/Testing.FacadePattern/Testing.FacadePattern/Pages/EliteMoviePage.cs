@@ -17,7 +17,7 @@ namespace Testing.FacadePattern.Pages
   {
     #region Constructors
 
-    public EliteMoviePage(IWebDriver driver) : base(driver)
+    public EliteMoviePage() : base()
     {
     }
 
@@ -29,7 +29,7 @@ namespace Testing.FacadePattern.Pages
     {
       this.Map.SearchFilm.SendKeys(film);
       this.Map.FirstFilm.Click();
-      return new SelectionSchedulePage(this.Driver);
+      return new SelectionSchedulePage();
     }
 
     #endregion Methods 

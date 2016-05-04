@@ -10,7 +10,7 @@ namespace Testing.FacadePattern.Template
   #region Imports
 
   using OpenQA.Selenium;
-
+  using Util;
   #endregion Imports
 
   public class BasePage<T>
@@ -18,11 +18,10 @@ namespace Testing.FacadePattern.Template
   {
     #region Constructors
 
-    public BasePage(IWebDriver driver)
+    public BasePage()
     {
-      this.Driver = driver;
+      this.Driver = DriverSingleton.Instance.Browser;
       this.Map = new T();
-      this.Map.Driver = this.Driver;
     }
 
     #endregion Constructors

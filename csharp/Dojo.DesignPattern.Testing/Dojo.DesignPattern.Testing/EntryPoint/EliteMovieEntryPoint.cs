@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using Dojo.DesignPattern.Testing.Entity;
-using Dojo.DesignPattern.Testing.Pages;
-using OpenQA.Selenium;
+﻿//-----------------------------------------------------------------------
+// <copyright file="EliteMovieEntryPoint.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.EntryPoint
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Threading;
+  using Entity;
+  using OpenQA.Selenium;
+  using Pages;
+
   public class EliteMovieEntryPoint
   {
     private EliteMoviePage eliteMovie;
@@ -25,31 +32,31 @@ namespace Dojo.DesignPattern.Testing.EntryPoint
       this.confirmation = new ConfirmationPage(driver);
     }
 
-    public void Reserve(Reserve reserve)
+    internal void Reserve(Reserve reserveInfo)
     {
-      eliteMovie.SelectFilm(reserve.Film);
+      this.eliteMovie.SelectFilm(reserveInfo.Film);
       Thread.Sleep(TimeSpan.FromSeconds(2));
-      schedule.SelectShowTime(reserve.Showtime, reserve.Seats.Count);
+      this.schedule.SelectShowTime(reserveInfo.Showtime, reserveInfo.Seats.Count);
       Thread.Sleep(TimeSpan.FromSeconds(2));
-      selectSeat.SelectSeatsAndContinue(reserve.Seats);
+      this.selectSeat.SelectSeatsAndContinue(reserveInfo.Seats);
       Thread.Sleep(TimeSpan.FromSeconds(2));
-      confirmation.Confirm();
+      this.confirmation.Confirm();
     }
 
-    public List<Seat> TryToSelectSeats(Reserve reserve, int seatNumber)
+    internal ICollection<Seat> TryToSelectSeats(Reserve reserve, int seatNumber)
     {
-      eliteMovie.SelectFilm(reserve.Film);
+      this.eliteMovie.SelectFilm(reserve.Film);
       Thread.Sleep(TimeSpan.FromSeconds(2));
-      schedule.SelectShowTime(reserve.Showtime, seatNumber);
+      this.schedule.SelectShowTime(reserve.Showtime, seatNumber);
       Thread.Sleep(TimeSpan.FromSeconds(2));
-      return selectSeat.SelectSeat(reserve.Seats);
+      return this.selectSeat.SelectSeat(reserve.Seats);
     }
 
-    public string TryToRereserve(Reserve reserve)
+    internal string TryToReserve(Reserve reserve)
     {
-      eliteMovie.SelectFilm(reserve.Film);
+      this.eliteMovie.SelectFilm(reserve.Film);
       Thread.Sleep(TimeSpan.FromSeconds(1));
-      schedule.SelectShowTime(reserve.Showtime, reserve.Seats.Count);
+      this.schedule.SelectShowTime(reserve.Showtime, reserve.Seats.Count);
       Thread.Sleep(TimeSpan.FromSeconds(1));
 
       return this.driver.SwitchTo().Alert().Text;
@@ -57,7 +64,16 @@ namespace Dojo.DesignPattern.Testing.EntryPoint
 
     internal bool FindFilm(string filmName)
     {
-      return eliteMovie.FindFilm(filmName);
+      return this.eliteMovie.FindFilm(filmName);
+    }
+
+    internal ICollection<Seat> ObtainBookedSeats(Reserve reserve)
+    {
+      this.eliteMovie.SelectFilm(reserve.Film);
+      Thread.Sleep(TimeSpan.FromSeconds(1));
+      this.schedule.SelectShowTime(reserve.Showtime, reserve.Seats.Count);
+      Thread.Sleep(TimeSpan.FromSeconds(1));
+      return this.selectSeat.ObtainBookedSeats();
     }
   }
 }

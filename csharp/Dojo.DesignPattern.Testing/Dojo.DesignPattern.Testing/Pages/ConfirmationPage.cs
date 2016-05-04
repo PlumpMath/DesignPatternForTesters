@@ -1,8 +1,15 @@
-﻿using Dojo.DesignPattern.Testing.Template;
-using OpenQA.Selenium;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ConfirmationPage.cs" company="ShareKnowledge">
+//     Copyright (c) ShareKnowledge. All rights reserved.
+// </copyright>
+// <author>Alejandro Perdomo</author>
+//-----------------------------------------------------------------------
 
 namespace Dojo.DesignPattern.Testing.Pages
 {
+  using OpenQA.Selenium;
+  using Template;
+
   public class ConfirmationPage : PageBase<ConfirmationMap>
   {
     public ConfirmationPage(IWebDriver driver) : base(driver)

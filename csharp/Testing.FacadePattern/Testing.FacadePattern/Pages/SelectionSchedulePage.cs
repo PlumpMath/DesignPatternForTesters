@@ -19,7 +19,7 @@ namespace Testing.FacadePattern.Pages
   {
     #region Constructors
 
-    public SelectionSchedulePage(IWebDriver driver) : base(driver)
+    public SelectionSchedulePage() : base()
     {
     }
 
@@ -33,7 +33,7 @@ namespace Testing.FacadePattern.Pages
       this.Map.Seats.SelectByValue(seats.ToString(CultureInfo.CurrentCulture));
       this.Map.Continue.Click();
 
-      return new AssignSeatPage(this.Driver);
+      return new AssignSeatPage();
     }
 
     #endregion Methods

@@ -20,12 +20,12 @@ namespace Testing.FacadePattern.Util
     private AssignSeatPage assignSeat;
     private ConfirmationPage confirmation;
 
-    public EliteMovieEntryPoint(IWebDriver driver)
+    public EliteMovieEntryPoint()
     {
-      this.eliteMovie = new EliteMoviePage(driver);
-      this.schedule = new SelectionSchedulePage(driver);
-      this.assignSeat = new AssignSeatPage(driver);
-      this.confirmation = new ConfirmationPage(driver);
+      this.eliteMovie = new EliteMoviePage();
+      this.schedule = new SelectionSchedulePage();
+      this.assignSeat = new AssignSeatPage();
+      this.confirmation = new ConfirmationPage();
     }
 
     public void Reserve(Reserve informationReserve)
