@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserType.cs" />
     <Compile Include="EliteMovieTests.cs" />
     <Compile Include="Entity\Reserve.cs" />
     <Compile Include="Entity\Seat.cs" />
@@ -79,6 +80,7 @@
     </Compile>
     <Compile Include="Template\BasePageElementMap.cs" />
     <Compile Include="Template\PageBase.cs" />
+    <Compile Include="WebDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

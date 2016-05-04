@@ -13,11 +13,10 @@ namespace Dojo.DesignPattern.Testing.Template
   {
     #region Constructors
 
-    public PageBase(IWebDriver driver)
+    public PageBase()
     {
-      this.Driver = driver;
+      this.Driver = WebDriver.Instance.Browser;
       this.Map = new T();
-      this.Map.Driver = this.Driver;
     }
 
     #endregion Constructors

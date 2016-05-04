@@ -21,15 +21,12 @@ namespace Dojo.DesignPattern.Testing.EntryPoint
     private SelectSeatPage selectSeat;
     private ConfirmationPage confirmation;
 
-    private IWebDriver driver;
-
-    public EliteMovieEntryPoint(IWebDriver driver)
+    public EliteMovieEntryPoint()
     {
-      this.driver = driver;
-      this.eliteMovie = new EliteMoviePage(driver);
-      this.schedule = new SchedulePage(driver);
-      this.selectSeat = new SelectSeatPage(driver);
-      this.confirmation = new ConfirmationPage(driver);
+      this.eliteMovie = new EliteMoviePage();
+      this.schedule = new SchedulePage();
+      this.selectSeat = new SelectSeatPage();
+      this.confirmation = new ConfirmationPage();
     }
 
     internal void Reserve(Reserve reserveInfo)
@@ -58,8 +55,7 @@ namespace Dojo.DesignPattern.Testing.EntryPoint
       Thread.Sleep(TimeSpan.FromSeconds(1));
       this.schedule.SelectShowTime(reserve.Showtime, reserve.Seats.Count);
       Thread.Sleep(TimeSpan.FromSeconds(1));
-
-      return this.driver.SwitchTo().Alert().Text;
+      return this.selectSeat.AlertMessage();
     }
 
     internal bool FindFilm(string filmName)

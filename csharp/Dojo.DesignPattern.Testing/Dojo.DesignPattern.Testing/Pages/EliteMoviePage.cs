@@ -13,16 +13,12 @@ namespace Dojo.DesignPattern.Testing.Pages
 
   public class EliteMoviePage : PageBase<EliteMovieMap>
   {
-    public EliteMoviePage(IWebDriver driver) : base(driver)
-    {
-    }
-
     public SchedulePage SelectFilm(string filmName)
     {
       this.Map.SearchFilm.SendKeys(filmName);
       this.Map.Film.Click();
 
-      return new SchedulePage(this.Driver);
+      return new SchedulePage();
     }
 
     internal bool FindFilm(string filmName)
