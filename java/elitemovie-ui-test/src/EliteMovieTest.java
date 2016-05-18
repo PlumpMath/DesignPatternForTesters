@@ -1,7 +1,9 @@
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+// this is recomended for call the Assert methods with a cleaner syntax.
+// reference :review http://junit.sourceforge.net/javadoc/org/junit/Assert.html
+import static org.junit.Assert.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -54,7 +56,7 @@ public class EliteMovieTest {
         Thread.sleep(1000);
         String[] bookedSeats = selectSeat.getBookedSeats();
         
-        Assert.assertArrayEquals(seats, bookedSeats);
+        assertArrayEquals(seats, bookedSeats);
 	}
 }
 
