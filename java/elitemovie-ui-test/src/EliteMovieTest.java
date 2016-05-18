@@ -6,7 +6,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
+import model.Theather;
 import page.ConfirmPage;
 import page.EliteMoviePage;
 import page.SchedulePage;
@@ -25,7 +28,7 @@ public class EliteMovieTest {
 	public void teardown() {
 		this.driver.close();
 	}
-	
+
 	@Test
 	public void reserve() throws InterruptedException {
         String[] seats= new String[] {
@@ -58,5 +61,35 @@ public class EliteMovieTest {
         
         assertArrayEquals(seats, bookedSeats);
 	}
+	
+	@Test
+	public void reserveApiValidation() throws InterruptedException {
+        String[] seats= new String[] {
+            	"2,12", "2,13", "2,14"
+            };
+
+		this.driver.navigate().to("http://localhost:8080/");
+		
+		EliteMoviePage eliteMovie = new EliteMoviePage(this.driver);
+		eliteMovie.selectFilm("El violinista del diablo");
+
+        Thread.sleep(1000);
+        SchedulePage schedule = new SchedulePage(this.driver);
+        schedule.scheduleMovie("2", "3");
+
+        Thread.sleep(1000);
+        SelectSeatPage selectSeat = new SelectSeatPage(this.driver);
+        selectSeat.select(seats);
+
+        Thread.sleep(1000);
+        ConfirmPage confirm = new ConfirmPage(this.driver);
+        confirm.finalize();
+
+        EliteMovieApi api = new EliteMovieApi();
+        String[] bookedSeats = api.getBookedSeats();
+                
+        assertArrayEquals(seats, bookedSeats);
+	}
+
 }
 
