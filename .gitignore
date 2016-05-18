@@ -24,3 +24,8 @@
 /csharp/Testing.IoC/Testing.IoC/bin
 /csharp/Testing.IoC/packages
 /csharp/Testing.IoC/.vs
+
+.classpath
+.project
+.settings/
+target
