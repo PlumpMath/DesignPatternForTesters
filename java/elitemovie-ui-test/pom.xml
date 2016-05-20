@@ -4,7 +4,6 @@
   <artifactId>elitemovie-ui-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <build>
-    <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -35,6 +34,16 @@
   		<artifactId>selenium-java</artifactId>
   		<version>2.53.0</version>
   	</dependency>
-  	
+
+  	<dependency>
+  		<groupId>info.cukes</groupId>
+  		<artifactId>cucumber-java</artifactId>
+  		<version>1.2.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>info.cukes</groupId>
+  		<artifactId>cucumber-junit</artifactId>
+  		<version>1.2.4</version>
+  	</dependency>
   </dependencies>
 </project>

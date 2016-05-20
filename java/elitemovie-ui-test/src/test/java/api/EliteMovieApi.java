@@ -1,3 +1,5 @@
+package api;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +10,10 @@ import model.Seat;
 import model.Theather;
 
 public class EliteMovieApi {
-
 	public String[] getBookedSeats() {
 		RestTemplate restTemplate = new RestTemplate();
+		
 		String urlToRequest = "http://localhost:8080/rest/showtime/2";
-	
 		ResponseEntity<Theather> response = restTemplate.getForEntity(urlToRequest, Theather.class);
 		
 		Theather theater = response.getBody();

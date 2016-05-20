@@ -1,35 +1,32 @@
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-// this is recomended for call the Assert methods with a cleaner syntax.
-// reference :review http://junit.sourceforge.net/javadoc/org/junit/Assert.html
-import static org.junit.Assert.*;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-import model.Theather;
+import api.EliteMovieApi;
 import page.ConfirmPage;
 import page.EliteMoviePage;
 import page.SchedulePage;
 import page.SelectSeatPage;
 
+import static org.junit.Assert.*;
+
 public class EliteMovieTest {
 
 	private WebDriver driver;
 	
-	@Before
+	//@Before
 	public void setup() {
 		this.driver = new FirefoxDriver();
 	}
 	
-	@After
+	//@After
 	public void teardown() {
 		this.driver.close();
 	}
 
-	@Test
+	//@Test
 	public void reserve() throws InterruptedException {
         String[] seats= new String[] {
             	"4,12", "4,13", "4,14"
@@ -62,7 +59,7 @@ public class EliteMovieTest {
         assertArrayEquals(seats, bookedSeats);
 	}
 	
-	@Test
+	//@Test
 	public void reserveApiValidation() throws InterruptedException {
         String[] seats= new String[] {
             	"2,12", "2,13", "2,14"
@@ -90,6 +87,4 @@ public class EliteMovieTest {
                 
         assertArrayEquals(seats, bookedSeats);
 	}
-
 }
-
