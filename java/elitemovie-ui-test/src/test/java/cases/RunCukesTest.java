@@ -1,4 +1,4 @@
-package cucumber;
+package cases;
 
 import org.junit.runner.RunWith;
 

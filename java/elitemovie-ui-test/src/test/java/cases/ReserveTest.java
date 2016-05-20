@@ -1,4 +1,4 @@
-package cucumber;
+package cases;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -34,13 +34,9 @@ public class ReserveTest {
 		this.seatsAccount = seatsAccount;
 	}
 
-	@When("^reverve the seats \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
-	public void reserve(String first, String second, String third) throws Throwable {
-		this.seats = new String[] {
-				first,
-				second,
-				third
-			};
+	@When("^reverve the seats \"([^\"]*)\"$")
+	public void reserve(String seatsInformation) throws Throwable {
+		this.seats = seatsInformation.split(";");
 		
 		WebDriver driver = null;
 

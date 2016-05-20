@@ -7,4 +7,4 @@ Scenario Outline: Empty theather
 	
 	Examples: Happy path reserves
 		| filmName                   | showTime | seatsAccount | seats                |
-		| "El violinista del diablo" | "2"      | "3"          | "3,12" "3,13" "3,14" | 
+		| "El violinista del diablo" | "2"      | "3"          | "1,12;1,13;1,14"     |
